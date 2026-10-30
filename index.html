@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IcePro | Heladería en Guasave</title>
+<meta name="description" content="Helados, paletas, nieves y raspados elaborados en el local, con sabores clásicos y precios accesibles. Guasave, Sinaloa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azulhielo: #004AAD;
+    --hielo: #EAF6F9;
+    --tinta: #12263A;
+    --guayaba: #E23E6F;
+    --mango: #FFB522;
+    --menta: #6FD3B0;
+    --blanco: #FFFFFF;
+    --scoop: #F2799A; /* lo cambia el selector de sabores */
+    --titulo: "Fredoka", "Trebuchet MS", sans-serif;
+    --texto: "Nunito", "Segoe UI", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--texto); font-size: 1.0625rem; line-height: 1.6; color: var(--tinta); background: var(--hielo); }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--guayaba); outline-offset: 3px; }
+  .wrap { width: min(1080px, 100% - 2.5rem); margin-inline: auto; }
+  h1, h2, h3 { font-family: var(--titulo); line-height: 1.1; }
+  h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: .75rem; }
+
+  /* Barra superior */
+  header { padding: 1rem 0; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.logo { font-family: var(--titulo); font-weight: 700; font-size: 1.7rem; text-decoration: none; letter-spacing: -.01em; color: #004AAD; }
+  .logo span { color: var(--titulo); color: #1B1B1F }
+  nav { display: flex; gap: 1.4rem; font-weight: 700; }
+  nav a { text-decoration: none; }
+  nav a:hover { color: var(--guayaba); }
+
+  /* Botones */
+  .btn { display: inline-block; font-family: var(--titulo); font-weight: 600; font-size: 1.1rem; padding: .8rem 1.5rem; border-radius: 999px; background: var(--guayaba); color: var(--blanco); text-decoration: none; border: 0; cursor: pointer; transition: transform .15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn.claro { background: var(--blanco); color: var(--tinta); }
+
+  /* Portada con selector de sabores */
+  .portada { padding: 2rem 0 4rem; }
+  .portada .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 2.5rem; align-items: center; }
+  .portada h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); letter-spacing: -.02em; margin-bottom: 1rem; }
+  .portada p.sub { max-width: 34ch; margin-bottom: 1.5rem; }
+  .sabores { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
+  .sabores button { font: 700 .95rem var(--texto); padding: .5rem 1rem; border-radius: 999px; border: 2px solid var(--tinta); background: transparent; color: var(--tinta); cursor: pointer; }
+  .sabores button[aria-pressed="true"] { background: var(--tinta); color: var(--blanco); }
+  .elegido { font-family: var(--titulo); font-weight: 600; font-size: 1.25rem; margin-bottom: 1.25rem; min-height: 1.6em; }
+  .cono { width: 100%; max-width: 360px; margin-inline: auto; display: block; }
+  .cono .bola { fill: var(--scoop); transition: fill .35s; }
+  .cono.rebota .grupo-bola { animation: rebote .45s ease-out; transform-origin: 50% 90%; }
+  @keyframes rebote { 0% { transform: scale(.92, 1.06); } 60% { transform: scale(1.04, .96); } 100% { transform: scale(1); } }
+
+  /* Productos */
+  .productos { background: var(--tinta); color: var(--blanco); padding: 4rem 0; }
+  .productos .lista { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2rem; }
+  .productos article { border-top: 4px solid var(--c); padding-top: 1rem; }
+  .productos h3 { font-size: 1.5rem; margin-bottom: .4rem; }
+  .productos p { color: #C9D8E3; font-size: .98rem; }
+
+  /* Por qué IcePro */
+  .porque { padding: 4rem 0; }
+  .porque .lista { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+  .tarjeta { display: flex; gap: 1rem; align-items: center; text-align: left; font: inherit; color: inherit; background: var(--blanco); border: 2px solid transparent; border-radius: 18px; padding: 1rem 1.1rem; cursor: pointer; }
+  .tarjeta:hover, .tarjeta[aria-pressed="true"] { border-color: var(--tinta); }
+  .tarjeta .punto { flex: none; width: 3.2rem; height: 3.2rem; border-radius: 50%; background: var(--c); box-shadow: inset 0 -6px 0 rgba(0,0,0,.12); }
+  .tarjeta h3 { font-size: 1.3rem; margin-bottom: .1rem; }
+  .tarjeta p { font-size: .95rem; line-height: 1.4; }
+  .sabores .punto { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; background: var(--c); margin-right: .45rem; border: 1px solid rgba(0,0,0,.25); }
+  
+  /* Pedidos */
+  .pedidos { background: var(--guayaba); color: var(--blanco); padding: 3.5rem 0; }
+  .pedidos .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .pedidos p { max-width: 46ch; }
+
+  /* Visítanos */
+  .visita { padding: 4rem 0; }
+  .visita dl { display: grid; grid-template-columns: max-content 1fr; gap: .6rem 1.5rem; margin-top: 1.5rem; }
+  .visita dt { font-weight: 700; }
+  .marcador { background: #FFF1B8; padding: 0 .3rem; border-radius: 4px; }
+
+  footer { padding: 1.5rem 0 2.5rem; font-size: .92rem; border-top: 2px solid var(--tinta); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+  @media (max-width: 860px) {
+    .portada .wrap { grid-template-columns: 1fr; }
+    .cono { max-width: 260px; order: -1; }
+    .productos .lista { grid-template-columns: repeat(2, 1fr); }
+    .porque .lista { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) { .productos .lista, .porque .lista { grid-template-columns: 1fr; } nav { gap: 1rem; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cono.rebota .grupo-bola, .btn { animation: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#inicio">Ice<span>Pro</span></a>
+    <nav aria-label="Principal">
+      <a href="#productos">Productos</a>
+      <a href="#sabores">Sabores</a>
+      <a href="#visitanos">Visítanos</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="portada">
+    <div class="wrap">
+      <div>
+        <h1>Helado hecho aquí, con sabor de aquí.</h1>
+        <p class="sub">Helados, paletas, nieves y raspados frescos, elaborados en casa para vender en parque fundadores en Guasave. Elige un sabor y pídelo por WhatsApp.</p>
+        <div class="sabores" role="group" aria-label="Elige un sabor" id="botones"></div>
+        <p class="elegido" aria-live="polite" id="elegido">Tu elección: Fresa</p>
+        <a class="btn" id="pedir" href="#" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+      </div>
+
+      <svg class="cono" id="cono" viewBox="0 0 300 420" role="img" aria-label="Cono de helado del sabor elegido">
+        <polygon points="85,215 215,215 150,400" fill="#E9B872"/>
+        <path d="M105,245 L195,245 M120,280 L180,280 M135,315 L165,315" stroke="#C98F45" stroke-width="5" stroke-linecap="round"/>
+        <g class="grupo-bola">
+          <path class="bola" d="M70,215 C60,130 100,60 150,60 C200,60 240,130 230,215 C225,235 205,222 195,238 C185,252 170,232 150,240 C130,252 115,230 105,238 C92,224 74,236 70,215 Z"/>
+          <ellipse cx="115" cy="115" rx="22" ry="34" fill="#fff" opacity=".28" transform="rotate(-20 115 115)"/>
+        </g>
+        <circle cx="150" cy="52" r="14" fill="#E23E6F"/>
+        <path d="M150,40 C152,26 162,20 172,18" stroke="#12263A" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="productos" id="productos">
+    <div class="wrap">
+      <h2>Lo que preparamos</h2>
+      <p>Todo lo que se elabora es casero, con leche, crema, azúcar y fruta.</p>
+      <div class="lista">
+        <article style="--c: var(--mango)">
+          <h3>Helados</h3>
+          <p>En cono o en vaso, en varios tamaños para cada presupuesto.</p>
+        </article>
+        <article style="--c: var(--guayaba)">
+          <h3>Paletas</h3>
+          <p>De agua y de crema, con fruta de temporada.</p>
+        </article>
+        <article style="--c: var(--menta)">
+          <h3>Nieves</h3>
+          <p>Artesanales, de fruta y de sabores de toda la vida.</p>
+        </article>
+        <article style="--c: #8FD3FF">
+          <h3>Raspados</h3>
+          <p>Hielo fino con jarabes de sabor, para el calor de todos los días.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="porque" id="sabores">
+    <div class="wrap">
+      <h2>Nuestros sabores</h2>
+      <p>Toca uno para verlo en el cono y pedirlo por WhatsApp.</p>
+      <div class="lista" id="tarjetas"></div>
+    </div>
+  </section>
+
+  <section class="pedidos" id="pedidos">
+    <div class="wrap">
+      <div>
+        <h2>Pide sin esperas</h2>
+        <p>Escríbenos por WhatsApp, dinos qué se te antoja y pasa por tu pedido.</p>
+      </div>
+      <a class="btn claro" id="pedir2" href="#" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+  </section>
+
+  <section class="visita" id="visitanos">
+    <div class="wrap">
+      <h2>Visítanos</h2>
+      <p>En nuestro puesto de helados en el parque</p>
+      <dl>
+        <dt>Dirección</dt><dd><span class="marcador">Parque Principal fundadores calle diego de becerra, Guasave, Sinaloa</span></dd>
+        <dt>Horario</dt><dd><span class="marcador">2:00 pm-7:00 pm</span></dd>
+        <dt>WhatsApp</dt><dd><span class="marcador">669-436-5070</span></dd>
+        <dt>Redes</dt><dd><span class="marcador">Instagram: @icepro777</span></dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="anio"></span> IcePro. Guasave, Sinaloa.</span>
+    <span>Proyecto de Formación en Cultura Emprendedora, UAdeO.</span>
+  </div>
+</footer>
+
+<script>
+  // PENDIENTE: cambia por el número real, con lada de país y sin signos. Ejemplo: 526871234567
+  const NUMERO_WHATSAPP = "52XXXXXXXXXX";
+
+  const SABORES = [
+    { nombre: "Fresa",     color: "#F2799A", info: "Cremosa, con trozos de fresa." },
+    { nombre: "Chocolate", color: "#6B3F2A", info: "Intenso, para los que aman el cacao." },
+    { nombre: "Vainilla",  color: "#F6E7B4", info: "El clásico que le gusta a todos." },
+    { nombre: "Limón",     color: "#B7DB5A", info: "Fresco y ácido, ideal para el calor." },
+    { nombre: "Café",      color: "#A67B5B", info: "Con el sabor del café recién hecho." },
+    { nombre: "Menta",     color: "#7ED6B5", info: "Suave y refrescante." }
+  ];
+
+  const cono = document.getElementById("cono");
+  const elegido = document.getElementById("elegido");
+  const enlaces = [document.getElementById("pedir"), document.getElementById("pedir2")];
+  const contBotones = document.getElementById("botones");
+  const contTarjetas = document.getElementById("tarjetas");
+  let sabor = SABORES[0].nombre;
+
+  function actualizarEnlaces() {
+    const msg = encodeURIComponent("Hola, quisiera pedir un helado de " + sabor + ".");
+    enlaces.forEach(a => a.href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + msg);
+  }
+
+  function elegir(nombre) {
+    const s = SABORES.find(x => x.nombre === nombre);
+    sabor = s.nombre;
+    document.documentElement.style.setProperty("--scoop", s.color);
+    elegido.textContent = "Tu elección: " + sabor;
+    document.querySelectorAll("[data-sabor]").forEach(el =>
+      el.setAttribute("aria-pressed", el.dataset.sabor === sabor ? "true" : "false"));
+    cono.classList.remove("rebota");
+    void cono.getBoundingClientRect();
+    cono.classList.add("rebota");
+    actualizarEnlaces();
+  }
+
+  SABORES.forEach(s => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.sabor = s.nombre;
+    b.style.setProperty("--c", s.color);
+    b.innerHTML = '<span class="punto"></span>' + s.nombre;
+    b.addEventListener("click", () => elegir(s.nombre));
+    contBotones.appendChild(b);
+
+    const t = document.createElement("button");
+    t.type = "button";
+    t.className = "tarjeta";
+    t.dataset.sabor = s.nombre;
+    t.style.setProperty("--c", s.color);
+    t.innerHTML = '<span class="punto"></span><span><h3>' + s.nombre + '</h3><p>' + s.info + '</p></span>';
+    t.addEventListener("click", () => { elegir(s.nombre); window.scrollTo({ top: 0, behavior: "smooth" }); });
+    contTarjetas.appendChild(t);
+  });
+
+  document.getElementById("anio").textContent = new Date().getFullYear();
+  elegir(SABORES[0].nombre);
+</script>
+</body>
+</html>
