@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IcePro | Heladería en Guasave</title>
-<meta name="description" content="Helados, paletas, nieves y raspados elaborados en el local, con sabores clásicos y precios accesibles. Guasave, Sinaloa.">
+<meta name="description" content="Helados de bolsa y paletas elaborados en el local, con sabores clásicos y precios accesibles. Guasave, Sinaloa.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -53,14 +53,14 @@
   .sabores button { font: 700 .95rem var(--texto); padding: .5rem 1rem; border-radius: 999px; border: 2px solid var(--tinta); background: transparent; color: var(--tinta); cursor: pointer; }
   .sabores button[aria-pressed="true"] { background: var(--tinta); color: var(--blanco); }
   .elegido { font-family: var(--titulo); font-weight: 600; font-size: 1.25rem; margin-bottom: 1.25rem; min-height: 1.6em; }
-  .cono { width: 100%; max-width: 360px; margin-inline: auto; display: block; }
-  .cono .bola { fill: var(--scoop); transition: fill .35s; }
-  .cono.rebota .grupo-bola { animation: rebote .45s ease-out; transform-origin: 50% 90%; }
-  @keyframes rebote { 0% { transform: scale(.92, 1.06); } 60% { transform: scale(1.04, .96); } 100% { transform: scale(1); } }
+  .bolsa { width: 100%; max-width: 360px; margin-inline: auto; display: block; overflow: visible; }
+  .bolsa .cuerpo { fill: var(--scoop); transition: fill .35s; }
+  .bolsa.rebota .grupo-bolsa { animation: rebote .45s ease-out; transform-box: fill-box; transform-origin: 50% 100%; }
+  @keyframes rebote { 0% { transform: scale(.94, 1.05); } 60% { transform: scale(1.04, .97); } 100% { transform: scale(1); } }
 
   /* Productos */
   .productos { background: var(--tinta); color: var(--blanco); padding: 4rem 0; }
-  .productos .lista { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2rem; }
+  .productos .lista { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 2rem; }
   .productos article { border-top: 4px solid var(--c); padding-top: 1rem; }
   .productos h3 { font-size: 1.5rem; margin-bottom: .4rem; }
   .productos p { color: #C9D8E3; font-size: .98rem; }
@@ -91,14 +91,13 @@
 
   @media (max-width: 860px) {
     .portada .wrap { grid-template-columns: 1fr; }
-    .cono { max-width: 260px; order: -1; }
-    .productos .lista { grid-template-columns: repeat(2, 1fr); }
+    .bolsa { max-width: 260px; order: -1; }
     .porque .lista { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 480px) { .productos .lista, .porque .lista { grid-template-columns: 1fr; } nav { gap: 1rem; } }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .cono.rebota .grupo-bola, .btn { animation: none; transition: none; }
+    .bolsa.rebota .grupo-bolsa, .btn { animation: none; transition: none; }
   }
 </style>
 </head>
@@ -120,21 +119,40 @@
     <div class="wrap">
       <div>
         <h1>Helado hecho aquí, con sabor de aquí.</h1>
-        <p class="sub">Helados, paletas, nieves y raspados frescos, elaborados en casa para vender en parque fundadores en Guasave. Elige un sabor y pídelo por WhatsApp.</p>
+        <p class="sub">Helados de bolsa y paletas frescos, elaborados en casa para vender en el Parque Fundadores de Guasave. Elige un sabor y pídelo por WhatsApp.</p>
         <div class="sabores" role="group" aria-label="Elige un sabor" id="botones"></div>
         <p class="elegido" aria-live="polite" id="elegido">Tu elección: Fresa</p>
         <a class="btn" id="pedir" href="#" target="_blank" rel="noopener">Pedir por WhatsApp</a>
       </div>
 
-      <svg class="cono" id="cono" viewBox="0 0 300 420" role="img" aria-label="Cono de helado del sabor elegido">
-        <polygon points="85,215 215,215 150,400" fill="#E9B872"/>
-        <path d="M105,245 L195,245 M120,280 L180,280 M135,315 L165,315" stroke="#C98F45" stroke-width="5" stroke-linecap="round"/>
-        <g class="grupo-bola">
-          <path class="bola" d="M70,215 C60,130 100,60 150,60 C200,60 240,130 230,215 C225,235 205,222 195,238 C185,252 170,232 150,240 C130,252 115,230 105,238 C92,224 74,236 70,215 Z"/>
-          <ellipse cx="115" cy="115" rx="22" ry="34" fill="#fff" opacity=".28" transform="rotate(-20 115 115)"/>
+      <svg class="bolsa" id="bolsa" viewBox="0 0 300 420" role="img" aria-label="Helado de bolsa del sabor elegido">
+        <g class="grupo-bolsa">
+          <!-- cuerpo de la bolsita -->
+          <path class="cuerpo" d="M127,150 C112,168 66,190 62,236 C58,290 62,340 60,382 C60,398 76,402 96,400 C120,396 130,404 150,402 C176,400 186,396 206,400 C226,402 240,396 240,382 C238,340 242,290 238,236 C234,190 188,168 173,150 Z" stroke="#1B1B1F" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- sombra suave del lado derecho y brillo del izquierdo -->
+          <path d="M200,168 C226,190 236,210 238,246 C240,300 236,340 240,382 C240,398 226,402 206,400 C214,330 216,230 200,168 Z" fill="#000" opacity=".07"/>
+          <path d="M82,250 C78,300 80,340 80,370" stroke="#fff" stroke-width="9" stroke-linecap="round" fill="none" opacity=".3"/>
+          <!-- arrugas de abajo -->
+          <path d="M70,392 C80,386 90,388 98,394 M202,394 C212,386 224,386 232,392" stroke="#1B1B1F" stroke-opacity=".35" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- amarre arrugado -->
+          <path d="M122,154 C114,140 108,122 98,106 L112,98 L116,80 L133,92 L141,68 L153,88 L168,72 L173,94 L191,90 L186,108 C182,124 178,140 178,154 Z" fill="#D3E5EA" stroke="#1B1B1F" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M138,98 C136,120 134,136 132,152 M154,96 C154,118 154,136 152,152 M168,100 C168,120 168,136 170,152" stroke="#8FB0BA" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- cara -->
+          <g transform="translate(0,30)">
+            <g fill="#111">
+              <path d="M92,214 H144 V232 H136 V240 H128 V246 H108 V240 H100 V232 H92 Z"/>
+              <path d="M156,214 H208 V232 H200 V240 H192 V246 H172 V240 H164 V232 H156 Z"/>
+              <rect x="144" y="214" width="12" height="7"/>
+              <rect x="78" y="214" width="14" height="7"/>
+              <rect x="208" y="214" width="14" height="7"/>
+            </g>
+            <g fill="#fff" opacity=".85">
+              <rect x="100" y="221" width="8" height="4"/><rect x="108" y="225" width="4" height="4"/>
+              <rect x="164" y="221" width="8" height="4"/><rect x="172" y="225" width="4" height="4"/>
+            </g>
+            <path d="M110,268 Q150,314 190,268 Q150,282 110,268 Z" fill="#fff" stroke="#1B1B1F" stroke-width="2.5" stroke-linejoin="round"/>
+          </g>
         </g>
-        <circle cx="150" cy="52" r="14" fill="#E23E6F"/>
-        <path d="M150,40 C152,26 162,20 172,18" stroke="#12263A" stroke-width="4" fill="none" stroke-linecap="round"/>
       </svg>
     </div>
   </section>
@@ -145,20 +163,12 @@
       <p>Todo lo que se elabora es casero, con leche, crema, azúcar y fruta.</p>
       <div class="lista">
         <article style="--c: var(--mango)">
-          <h3>Helados</h3>
-          <p>En cono o en vaso, en varios tamaños para cada presupuesto.</p>
+          <h3>Helados de bolsa</h3>
+          <p>En bolsita, listos para llevar y comer bien fríos, en varios tamaños para cada presupuesto.</p>
         </article>
         <article style="--c: var(--guayaba)">
           <h3>Paletas</h3>
           <p>De agua y de crema, con fruta de temporada.</p>
-        </article>
-        <article style="--c: var(--menta)">
-          <h3>Nieves</h3>
-          <p>Artesanales, de fruta y de sabores de toda la vida.</p>
-        </article>
-        <article style="--c: #8FD3FF">
-          <h3>Raspados</h3>
-          <p>Hielo fino con jarabes de sabor, para el calor de todos los días.</p>
         </article>
       </div>
     </div>
@@ -167,7 +177,7 @@
   <section class="porque" id="sabores">
     <div class="wrap">
       <h2>Nuestros sabores</h2>
-      <p>Toca uno para verlo en el cono y pedirlo por WhatsApp.</p>
+      <p>Toca uno para verlo en la bolsita y pedirlo por WhatsApp.</p>
       <div class="lista" id="tarjetas"></div>
     </div>
   </section>
@@ -204,8 +214,8 @@
 </footer>
 
 <script>
-  // PENDIENTE: cambia por el número real, con lada de país y sin signos. Ejemplo: 526871234567
-  const NUMERO_WHATSAPP = "52XXXXXXXXXX";
+  // Número de WhatsApp con lada de país (52) y sin signos.
+  const NUMERO_WHATSAPP = "526694365070";
 
   const SABORES = [
     { nombre: "Fresa",     color: "#F2799A", info: "Cremosa, con trozos de fresa." },
@@ -216,7 +226,7 @@
     { nombre: "Menta",     color: "#7ED6B5", info: "Suave y refrescante." }
   ];
 
-  const cono = document.getElementById("cono");
+  const bolsa = document.getElementById("bolsa");
   const elegido = document.getElementById("elegido");
   const enlaces = [document.getElementById("pedir"), document.getElementById("pedir2")];
   const contBotones = document.getElementById("botones");
@@ -224,7 +234,7 @@
   let sabor = SABORES[0].nombre;
 
   function actualizarEnlaces() {
-    const msg = encodeURIComponent("Hola, quisiera pedir un helado de " + sabor + ".");
+    const msg = encodeURIComponent("Hola, quisiera pedir un helado de bolsa de " + sabor + ".");
     enlaces.forEach(a => a.href = "https://wa.me/" + NUMERO_WHATSAPP + "?text=" + msg);
   }
 
@@ -235,9 +245,9 @@
     elegido.textContent = "Tu elección: " + sabor;
     document.querySelectorAll("[data-sabor]").forEach(el =>
       el.setAttribute("aria-pressed", el.dataset.sabor === sabor ? "true" : "false"));
-    cono.classList.remove("rebota");
-    void cono.getBoundingClientRect();
-    cono.classList.add("rebota");
+    bolsa.classList.remove("rebota");
+    void bolsa.getBoundingClientRect();
+    bolsa.classList.add("rebota");
     actualizarEnlaces();
   }
 
